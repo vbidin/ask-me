@@ -20,6 +20,8 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 # Use jquery
 gem 'jquery-rails'
+# Use devise for authentication
+gem 'devise'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
