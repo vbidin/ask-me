@@ -1,5 +1,3 @@
-<!-- app/views/layouts/_header.html.erb -->
-
 <header>
   <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -10,11 +8,11 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">AskMe</a>
+        <a class="navbar-brand" href="/"><strong>AskMe</strong></a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="#">Rooms</a></li>
+          <li><a href="">Rooms</a></li>
         </ul>
         <ul class="nav navbar-nav pull-right">
           <% if user_signed_in? %>
@@ -35,12 +33,5 @@
         </ul>
       </div>
     </div> 
-  </div>
-  <div class="container">
-    <div class="row">
-      <hr><hr>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-    </div>
   </div>
 </header>

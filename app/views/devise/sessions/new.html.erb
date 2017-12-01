@@ -1,26 +1,41 @@
-<h2>Log in</h2>
-
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4><strong>Login</strong></h4>
     </div>
-  <% end -%>
+    <div class="panel-body">
+      <%= form_for(resource, as: resource_name, html: { class: "form" }, url: session_path(resource_name)) do |f| %>
+        <div class="form-group">
+          <%= f.label :email, class: "control-label" %>
+          <%= f.email_field :email, autofocus: true, class: "form-control" %>
+        </div>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+        <div class="form-group">
+          <%= f.label :password, class: "control-label" %>
+          <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+        </div>
+
+        <% if devise_mapping.rememberable? -%>
+          <div class="form-group">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end -%>
+
+        <div class="form-group">
+          <%= f.submit "Login", class: "btn btn-primary btn-login" %>
+        </div>
+      <% end %>
+
+      <hr>
+
+      <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+        <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+      <% end -%>
+
+      <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+        <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
+      <% end -%>
+    </div>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

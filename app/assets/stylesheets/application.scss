@@ -17,26 +17,51 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+$max-width: 55em;
+
 header
 {
+  margin-bottom: 75px;
+
+  .container
+  {
+    max-width: $max-width;
+  }
+  
 }
 
 content
 {
   .container
   {
-    max-width: 55em;
+    max-width: $max-width;
   }
 }
 
 footer 
 {
+  margin-top: 45px;
+
+  .container
+  {
+    max-width: $max-width;
+  }
+
   .panel
   {
-    display: table;
-    text-align: center;
+    position: fixed;
+
+    margin-bottom: 0px;
     margin-left: auto;
     margin-right: auto;
+
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+
+    display: table;
+    text-align: center;
+
     width: 100%;
   }
 }
