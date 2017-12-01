@@ -6,8 +6,8 @@
     <div class="panel-body">
       <%= form_for(resource, as: resource_name, html: { class: "form" }, url: session_path(resource_name)) do |f| %>
         <div class="form-group">
-          <%= f.label :email, class: "control-label" %>
-          <%= f.email_field :email, autofocus: true, class: "form-control" %>
+          <%= f.label (:username.to_s + " or " + :email.to_s), class: "control-label" %>
+          <%= f.text_field :login, autofocus: true, class: "form-control" %>
         </div>
 
         <div class="form-group">
