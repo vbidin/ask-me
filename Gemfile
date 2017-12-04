@@ -22,6 +22,8 @@ gem 'autoprefixer-rails'
 gem 'jquery-rails'
 # Use devise for authentication
 gem 'devise'
+# use cancancan for authorization
+gem 'cancancan'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
