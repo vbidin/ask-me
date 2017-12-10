@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  room: one
+  type: one
+  title: MyString
+  text: MyText
+  visible: false
+  locked: false
+
+two:
+  user: two
+  room: two
+  type: two
+  title: MyString
+  text: MyText
+  visible: false
+  locked: false

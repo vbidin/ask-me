@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Questions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Room</th>
+      <th>Type</th>
+      <th>Title</th>
+      <th>Text</th>
+      <th>Visible</th>
+      <th>Locked</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @questions.each do |question| %>
+      <tr>
+        <td><%= question.user %></td>
+        <td><%= question.room %></td>
+        <td><%= question.type %></td>
+        <td><%= question.title %></td>
+        <td><%= question.text %></td>
+        <td><%= question.visible %></td>
+        <td><%= question.locked %></td>
+        <td><%= link_to 'Show', question %></td>
+        <td><%= link_to 'Edit', edit_question_path(question) %></td>
+        <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Question', new_question_path %>
