@@ -1,24 +1,22 @@
-<div class="row">
-  <%= render 'layouts/errors', object: resource %>
-</div>
+<div class="container container-centered">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4><strong>Reset password</strong></h4>
+      </div>
+      <div class="panel-body">
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
 
-<div class="row">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4><strong>Reset password</strong></h4>
-    </div>
-    <div class="panel-body">
-      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <div class="form-group">
+            <%= f.label :username, class: "control-label" %>
+            <%= f.text_field :username, autofocus: true, class: "form-control" %>
+          </div>
 
-        <div class="form-group">
-          <%= f.label :username, class: "control-label" %>
-          <%= f.text_field :username, autofocus: true, class: "form-control" %>
-        </div>
-
-        <div class="form-group">
-          <%= f.submit "Reset", class: "btn btn-primary center-block" %>
-        </div>
-      <% end %>
+          <div class="form-group">
+            <%= f.submit "Reset", class: "btn btn-primary center-block" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

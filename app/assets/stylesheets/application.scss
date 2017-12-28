@@ -21,13 +21,15 @@ $max-width: 60em;
 
 header
 {
-  margin-bottom: 75px;
-
   .container
   {
     max-width: $max-width;
   }
-  
+
+  .padding
+  {
+    margin-top: 75px;
+  }
 }
 
 content
@@ -35,6 +37,14 @@ content
   .container
   {
     max-width: $max-width;
+  }
+
+  .container-centered
+  {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
   }
 }
 
