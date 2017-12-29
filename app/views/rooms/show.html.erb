@@ -1,14 +1,27 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
 
-<p>
-  <strong>Name:</strong>
-  <%= @room.name %>
-</p>
+    <p>
+      <strong>Name:</strong>
+      <%= @room.name %>
+    </p>
 
-<p>
-  <strong>Open:</strong>
-  <%= @room.open %>
-</p>
+    <p>
+      <strong>Open:</strong>
+      <%= @room.open %>
+    </p>
 
-<%= link_to 'Edit', edit_room_path(@room) %> |
-<%= link_to 'Back', rooms_path %>
+    <p>
+      <string>Permission:</strong>
+      <%= @role.name %>
+    </p>
+
+    <hr>
+
+    <%= link_to 'Edit', edit_room_path(@room) %> |
+    <%= link_to 'Back', rooms_path %>
+
+  </div>
+</div>
+
+

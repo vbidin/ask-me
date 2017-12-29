@@ -1,27 +1,42 @@
-<h1>Rooms</h1>
+<div class="container">
+  <div class="row">
+    <%= link_to 'New Room', new_room_path %>
+    <hr>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Open</th>
-      <th colspan="10"></th>
-    </tr>
-  </thead>
+  <div class="row">
+    <table data-toggle="table"
 
-  <tbody>
-    <% @rooms.each do |room| %>
-      <tr>
-        <td><%= room.name + "|" %></td>
-        <td><%= room.open %></td>
-        <td><%= link_to 'Join', room %></td>
-        <td><%= link_to 'Edit', edit_room_path(room) %></td>
-        <td><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+           data-search="true"
+           data-search-time-out="100"
+           data-search-align="left"
 
-<br>
+           data-pagination="true"
+           data-page-size="10"
+           data-page-list="[]"
 
-<%= link_to 'New Room', new_room_path %>
+           data-classes="table table-no-bordered"
+           data-striped="true">
+      <thead>
+        <tr>
+          <th data-align="center" data-field="id">Id</th>
+          <th data-align="center" data-field="name" data-sortable="true">Name</th>
+          <th data-align="center" data-field="permission" data-sortable="true">Permission</th>
+          <th data-align="center" data-field="status" data-sortable="true">Status</th>
+          <th data-align="center"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rooms.each do |room| %>
+          <tr>
+            <td><%= room.id %></td>
+            <td><%= room.name %></td>
+            <td><%= room.role %>
+            <td><%= room.open ? "Open" : "Closed" %>
+            <td><%= link_to 'Join', room, class: 'btn btn-primary btn-xs ' + (room.closed && room.role.name != "Admin" ? 'disabled' : ''), tabindex: "-1" %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -18,6 +18,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass'
 # Use autoprefixer
 gem 'autoprefixer-rails'
+# Use for sorting tables
+gem 'bootstrap-table-rails'
 # Use jquery
 gem 'jquery-rails'
 # Use devise for authentication

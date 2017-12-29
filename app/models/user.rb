@@ -38,4 +38,8 @@ class User < ApplicationRecord
       end
     end
   end
+
+  def to_s
+    return username
+  end
 end

@@ -5,13 +5,16 @@ class RoomsController < ApplicationController
   # GET /rooms
   # GET /rooms.json
   def index
-    @rooms = Room.all
-    @permissions = Permission.all
+    @rooms = Room.all.sort_by { |r| r.id }
+    @rooms.each { |r| r.role = get_role r }
+    @rooms
   end
 
   # GET /rooms/1
   # GET /rooms/1.json
   def show
+    @role = get_role @room
+    raise "Room is closed" if @room.closed && @role.name != "Admin"
   end
 
   # GET /rooms/new
@@ -27,6 +30,10 @@ class RoomsController < ApplicationController
   # POST /rooms.json
   def create
     @room = Room.new(room_params)
+
+    # set the current user as room administrator
+    @permission = Permission.new(user: current_user, room: @room, role: Role.admin)
+    @permission.save
 
     respond_to do |format|
       if @room.save
@@ -67,6 +74,14 @@ class RoomsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_room
       @room = Room.find(params[:id])
+    end
+
+    def get_role room
+      perm = Permission.find do |p|
+        p.user == current_user && p.room == room
+      end
+
+      role = perm.nil? ? Role.default : perm.role
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

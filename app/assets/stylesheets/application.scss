@@ -16,8 +16,14 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap-table";
 
 $max-width: 60em;
+
+*
+{
+  border-radius: 0 !important
+}
 
 header
 {
