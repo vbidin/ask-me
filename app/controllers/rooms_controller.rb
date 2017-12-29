@@ -7,7 +7,7 @@ class RoomsController < ApplicationController
   def index
     @rooms = Room.all.sort_by { |r| r.id }
     @rooms.each { |r| r.role = get_role r }
-    @rooms
+    @room = Room.new
   end
 
   # GET /rooms/1
@@ -29,19 +29,22 @@ class RoomsController < ApplicationController
   # POST /rooms
   # POST /rooms.json
   def create
-    @room = Room.new(room_params)
 
-    # set the current user as room administrator
-    @permission = Permission.new(user: current_user, room: @room, role: Role.admin)
-    @permission.save
+    @room = Room.new(room_params)
 
     respond_to do |format|
       if @room.save
+        # set the current user as room administrator
+        @permission = Permission.new(user: current_user, room: @room, role: Role.admin)
+        @permission.save
+        
         format.html { redirect_to @room, notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @room.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
