@@ -1,26 +1,30 @@
 <div class="container">
   <div class="row">
-    <h2><b>Rooms</b></h2>
-    <hr>
-  </div>
+    <div id="heading" class="col-xs-4">
+      <h3><b>Rooms</b></h3>
+    </div>
 
-  <div class="row">
-    <%= form_with(model: @room, url: {:controller => 'rooms', :action => 'create'}, class: "form-inline") do |form| %>
-      <div class="form-group">
-        <%= form.label :name, class: "control-label" %>
-        <%= form.text_field :name, class: "form-control" %>
-      </div>
+    <div class="col-xs-8">
+      <%= form_with(model: @room, url: {:controller => 'rooms', :action => 'create'}, class: "form-inline") do |form| %>
+        <div class="form-group">
+          <%= form.label :name, class: "control-label" %>
+          <%= form.text_field :name, class: "form-control" %>
+        </div>
 
-      <div class="form-group">
-        <%= form.label :open, class: "control-label" %>
-        <%= form.check_box :open, class: "form-control" %>
-      </div>
+        <div class="form-group">
+          <%= form.label :open, class: "control-label" %>
+          <%= form.check_box :open, class: "form-control" %>
+        </div>
 
-      <div class="form-group">
-        <%= form.submit "Create", class: "btn btn-success center-block" %>
-      </div>
-    <% end %>
-    <hr>
+        <div class="form-group">
+          <%= form.submit "Create", class: "btn btn-success btn-sm center-block" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="col-xs-12">
+      <hr>
+    </div>
   </div>
 
   <div class="row">
@@ -35,7 +39,7 @@
            data-trim-on-search="false"
 
            data-pagination="true"
-           data-page-size="10"
+           data-page-size="15"
            data-page-list="[]"
 
            data-classes="table">
