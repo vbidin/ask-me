@@ -24,7 +24,8 @@
   </div>
 
   <div class="row">
-    <table data-toggle="table"
+    <table id="table"
+           data-toggle="table"
            data-classes="table table-hover"
 
            data-search="true"
@@ -43,17 +44,17 @@
           <th data-align="center" data-field="name" data-sortable="true">Name</th>
           <th data-align="center" data-field="permission" data-sortable="true">Permission</th>
           <th data-align="center" data-field="status" data-sortable="true">Status</th>
-          <th data-align="center"></th>
+          <th data-align="center" data-field="button"></th>
         </tr>
       </thead>
       <tbody>
         <% @rooms.each do |room| %>
-          <tr class= <%= if room.open then "success" elsif room.role.name == "Admin" then "warning" else "" end %>>
+          <tr data-index=<%= room.id.to_s %> class= <%= if room.open then "success" elsif room.role.name == "Admin" then "warning" else "" end %>>
             <td><%= room.id %></td>
             <td><%= room.name %></td>
-            <td><%= room.role %>
-            <td><%= room.open ? "Open" : "Closed" %>
-            <td><%= link_to 'Enter', room, class: 'btn btn-primary btn-xs ' + (room.closed && room.role.name != "Admin" ? 'disabled' : ''), tabindex: "-1" %>
+            <td><%= room.role %></td>
+            <td><%= room.open ? "Open" : "Closed" %></td>
+            <td><%= link_to 'Enter', room, class: 'btn btn-primary btn-xs ' + (room.closed && room.role.name != "Admin" ? 'disabled' : ''), tabindex: "-1" %></td>
           </tr>
         <% end %>
       </tbody>

@@ -1,1 +1,8 @@
-alert("Hello")
+<% if @room.save %>
+  var html = $('<tr data-index=<%= @room.id.to_s %> class="info"></tr>')
+  var str = html.prop('outerHTML')
+  console.log(str)
+<% else %>
+  alert("ERROR")
+<% end %>
+  

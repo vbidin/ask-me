@@ -5,8 +5,7 @@ class RoomsController < ApplicationController
   # GET /rooms
   # GET /rooms.json
   def index
-    @rooms = Room.all.sort_by { |r| r.id }
-    @rooms.each { |r| r.role = get_role r }
+    @rooms = Room.all.each { |r| r.role = get_role r }
     @room = Room.new
   end
 
@@ -80,11 +79,9 @@ class RoomsController < ApplicationController
     end
 
     def get_role room
-      perm = Permission.find do |p|
-        p.user == current_user && p.room == room
-      end
+      perm = Permission.where(user: current_user, room: room).first
 
-      role = perm.nil? ? Role.default : perm.role
+      role = perm.nil? ? Role.guest : perm.role
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
