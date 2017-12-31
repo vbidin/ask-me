@@ -37,16 +37,15 @@ ivan.skip_confirmation!
 ivan.save!
 
 # add rooms
-room = Room.create(name: "Room #1", open: true)
-Permission.create(user: vedran, room: room, role: admin)
-Permission.create(user: pero, room: room, role: mod)
-
-room = Room.create(name: "Closed room", open: false)
-Permission.create(user: vedran, room: room, role: admin)
 
 Room.create(name: "Room #2", open: false)
 Room.create(name: "Room #17", open: false)
 Room.create(name: "Room #692", open: false)
+
+room = Room.create(name: "Room #1", open: true)
+Permission.create(user: vedran, room: room, role: admin)
+Permission.create(user: pero, room: room, role: mod)
+
 Room.create(name: "Room #22", open: false)
 Room.create(name: "Test room", open: true)
 Room.create(name: "Room #692741", open: false)
@@ -59,6 +58,10 @@ Room.create(name: "Room #125", open: false)
 Room.create(name: "Roomy", open: true)
 Room.create(name: "Room #111", open: false)
 Room.create(name: "Room #901", open: false)
+
+room = Room.create(name: "Closed room", open: false)
+Permission.create(user: vedran, room: room, role: admin)
+
 Room.create(name: "Room #23582768074693", open: false)
 Room.create(name: "Room #3", open: false)
 Room.create(name: "Room #2451", open: false)

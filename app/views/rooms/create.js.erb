@@ -1,8 +1,25 @@
 <% if @room.save %>
-  var html = $('<tr data-index=<%= @room.id.to_s %> class="info"></tr>')
-  var str = html.prop('outerHTML')
-  console.log(str)
+  $('#table').bootstrapTable('insertRow', {
+    index: 0,
+    row: {
+      id: "<%= @room.id.to_s %>",
+      name: "<%= @room.name %>",
+      permission: "Admin",
+      status: "Created",
+      button: "<%= escape_javascript link_to "Enter", @room, class: "btn btn-primary btn-xs", tabindex: "-1" %>",
+      new: true
+    }
+  })
+
+  $('#info').html(`
+    <div class="alert alert-success alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <p>Successfuly created room.</p>
+    </div>
+  `)
 <% else %>
-  alert("ERROR")
+  $('#info').html(`
+    <%= render 'layouts/errors', object: @room %>
+  `)
 <% end %>
   
