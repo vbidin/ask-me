@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
-  
-  resources :given_answers
-  resources :answers
-  resources :questions
-  resources :types
-  resources :permissions
-  resources :roles
-  resources :rooms
-  devise_for :users
   root 'home#index'
 
-  get 'home/index'
+  devise_for :users
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :rooms
+  resources :questions
+  resources :answers
+
+  get 'roles' => 'roles#index'
+  get 'types' => 'types#index'
+  
+  get 'permissions' => 'permissions#index'
+  get 'given_answers' => 'given_answers#index'
 end

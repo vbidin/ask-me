@@ -1,29 +1,23 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <div id="heading" class="col-xs-4">
+      <h3><b>Given answers</b></h3>
+    </div>
+  </div>
 
-<h1>Given Answers</h1>
+  <div class="row">
+    <hr>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Answer</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @given_answers.each do |given_answer| %>
-      <tr>
-        <td><%= given_answer.user %></td>
-        <td><%= given_answer.answer %></td>
-        <td><%= link_to 'Show', given_answer %></td>
-        <td><%= link_to 'Edit', edit_given_answer_path(given_answer) %></td>
-        <td><%= link_to 'Destroy', given_answer, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Given Answer', new_given_answer_path %>
+  <div class="row">
+    <table>
+      <tbody>
+        <% @given_answers.each do |ga| %>
+          <tr>
+            <td><%= ga.user.to_s + " - " + ga.answer.to_s %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

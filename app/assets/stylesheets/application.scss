@@ -22,7 +22,7 @@ $max-width: 60em;
 
 *
 {
-  border-radius: 0 !important
+  border-radius: 0 !important;
 }
 
 header
@@ -40,6 +40,8 @@ header
 
 content
 {
+  
+
   .container
   {
     max-width: $max-width;

@@ -14,7 +14,7 @@ class User < ApplicationRecord
 
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
 
-  has_many :permissions 
+  has_many :rooms, through: :permissions
   has_many :questions
   has_many :given_answers
   

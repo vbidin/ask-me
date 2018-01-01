@@ -7,9 +7,22 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # add roles
-admin = Role.create(name: "Admin")
-mod = Role.create(name: "Moderator")
-guest = Role.create(name: "Guest")
+admin = Role.admin
+mod = Role.moderator
+guest = Role.guest
+
+admin.save!
+mod.save!
+guest.save!
+
+# add question types
+yes_no = Type.yes_no
+text_choice = Type.text_choice
+text_multiple_choice = Type.text_multiple_choice
+
+yes_no.save!
+text_choice.save!
+text_multiple_choice.save!
 
 # add users
 vedran = User.new(
