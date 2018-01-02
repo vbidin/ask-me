@@ -1,17 +1,78 @@
-.btn
-{
-  width: 100%;
+@import "application.scss";
+
+$full-height: 100 - (2 * $padding) - $info;
+$full-width: $content-width;
+
+$height-factor: 3/4;
+
+$title-height: 7.5vh;
+$questions-height: $full-height - $title-height;
+$answers-height: $height-factor * $questions-height;
+$messages-height: $questions-height - $answers-height;
+
+#heading {
+  vertical-align: middle;
 }
 
-form 
-{ 
+form  { 
   margin: 0 auto; 
   width: 100%;
 }
 
-#heading
-{
-  margin-top: -14px;
-  display: inline-block;
-  vertical-align: middle;
+#title {
+  min-height: $title-height;
+  text-align: center;
+
+  .panel {
+    width: 100%;
+  }
+}
+
+#questions-container {
+  height: $questions-height;
+
+  .question-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .panel {
+    width: 105%;
+    height: $questions-height;
+    margin-left: -15px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+#answers-container {
+  height: $answers-height;
+  text-align: center;
+
+  .panel {
+    width: 100%;
+  }
+
+  .panel-heading {
+    height: 0.10 * $answers-height;
+  }
+
+  .panel-body {
+    height: 0.86 * $answers-height;
+  }
+}
+
+#messages-container {
+  height: $messages-height;
+  text-align: center;
+  
+  .panel {
+    width: 100%;
+  }
+
+  .panel-body {
+    height: $messages-height;
+  }
 }

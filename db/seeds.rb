@@ -17,8 +17,8 @@ guest.save!
 
 # add question types
 yes_no = Type.yes_no
-text_choice = Type.text_choice
-text_multiple_choice = Type.text_multiple_choice
+text_choice = Type.choice
+text_multiple_choice = Type.multiple_choice
 
 yes_no.save!
 text_choice.save!
@@ -50,19 +50,22 @@ ivan.skip_confirmation!
 ivan.save!
 
 # add rooms
-
 Room.create(name: "Room #2", open: false)
 Room.create(name: "Room #17", open: false)
 Room.create(name: "Room #692", open: false)
+
+room = Room.create(name: "Closed room", open: false)
+Permission.create(user: vedran, room: room, role: admin)
+
+Room.create(name: "Room #22", open: false)
+test_room = Room.create(name: "Test room", open: true)
+Room.create(name: "Room #692741", open: false)
+Room.create(name: "Room Room", open: false)
 
 room = Room.create(name: "Room #1", open: true)
 Permission.create(user: vedran, room: room, role: admin)
 Permission.create(user: pero, room: room, role: mod)
 
-Room.create(name: "Room #22", open: false)
-Room.create(name: "Test room", open: true)
-Room.create(name: "Room #692741", open: false)
-Room.create(name: "Room Room", open: false)
 Room.create(name: "Room", open: false)
 Room.create(name: "Room of horrors", open: false)
 Room.create(name: "Room #215415", open: false)
@@ -71,10 +74,50 @@ Room.create(name: "Room #125", open: false)
 Room.create(name: "Roomy", open: true)
 Room.create(name: "Room #111", open: false)
 Room.create(name: "Room #901", open: false)
-
-room = Room.create(name: "Closed room", open: false)
-Permission.create(user: vedran, room: room, role: admin)
-
 Room.create(name: "Room #23582768074693", open: false)
 Room.create(name: "Room #3", open: false)
 Room.create(name: "Room #2451", open: false)
+
+# add sample questions
+q1 = Question.create(
+  user: pero, 
+  room: test_room, 
+  type: Type.choice, 
+  title: "Question #1", 
+  text: "This is a sample choice question.",
+  visible: true,
+  locked: false
+)
+
+Answer.create(question: q1, data: "a\nAnswer 1")
+Answer.create(question: q1, data: "b\nAnswer 2")
+Answer.create(question: q1, data: "c\nAnswer 3")
+Answer.create(question: q1, data: "d\nAnswer 4")
+
+q2 = Question.create(
+  user: ivan, 
+  room: test_room, 
+  type: Type.yes_no,
+  title: "Question #2", 
+  text: "This is a sample YES/NO question.",
+  visible: true,
+  locked: false
+)
+
+Answer.create(question: q2, data: "Yes")
+Answer.create(question: q2, data: "No")
+
+q3 = Question.create(
+  user: vedran, 
+  room: test_room, 
+  type: Type.multiple_choice,
+  title: "Question #3", 
+  text: "This is a sample multiple choice question.",
+  visible: true,
+  locked: false
+)
+
+Answer.create(question: q3, data: "a\nAnswer 1")
+Answer.create(question: q3, data: "b\nAnswer 2")
+Answer.create(question: q3, data: "c\nAnswer 3")
+Answer.create(question: q3, data: "d\nAnswer 4")

@@ -18,37 +18,30 @@
 @import "bootstrap";
 @import "bootstrap-table";
 
-$max-width: 60em;
+$padding: 6.5vh;
+$info: 10vh;
+$content-width: 60em;
 
-*
-{
+* {
   border-radius: 0 !important;
 }
 
-header
-{
-  .container
-  {
-    max-width: $max-width;
+header {
+  .container {
+    max-width: 40em;
   }
 
-  .padding
-  {
-    margin-top: 75px;
+  .padding {
+    margin-top: 65px;
   }
 }
 
-content
-{
-  
-
-  .container
-  {
-    max-width: $max-width;
+content {
+  .container {
+    max-width: $content-width;
   }
 
-  .container-centered
-  {
+  .container-centered {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -56,17 +49,10 @@ content
   }
 }
 
-footer 
-{
-  margin-top: 45px;
+footer  {
+  margin-top: $padding;
 
-  .container
-  {
-    max-width: $max-width;
-  }
-
-  .panel
-  {
+  .panel {
     position: fixed;
 
     margin-bottom: 0px;

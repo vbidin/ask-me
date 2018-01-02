@@ -3,15 +3,15 @@ class Type < ApplicationRecord
 
   class << self
     def yes_no
-      new(name: "Yes/No")
+      new(name: "yes/no")
     end
 
-    def text_choice
-      new(name: "Text choice")
+    def choice
+      new(name: "choice")
     end
 
-    def text_multiple_choice
-      new(name: "Text multiple choice")
+    def multiple_choice
+      new(name: "multiple choice")
     end
   end
 

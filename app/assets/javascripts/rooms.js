@@ -5,3 +5,12 @@ function rowStyle(row, index) {
     return { classes: "success" }
   return { classes: "" }
 }
+
+function loadQuestion(id) {
+  $.get("/questions/" + id + ".json")
+    .done(function(question) {
+      $('#question-title').html(question.title)
+      $('#question-text').html(question.text)
+      $('#question-answers').html("answers go here")
+  })
+}

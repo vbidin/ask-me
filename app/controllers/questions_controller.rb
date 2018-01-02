@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.json
   def show
+    render json: @question.to_json(:include => :type)
   end
 
   # GET /questions/new
