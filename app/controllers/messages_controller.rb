@@ -29,7 +29,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        ActionCable.server.broadcast 'messages', @message.to_s
+        ActionCable.server.broadcast 'messages', { msg: @message, str: @message.to_s }
         format.json
       end
     end
