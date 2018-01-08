@@ -74,7 +74,7 @@ Room.create(name: "Room #125", open: false)
 Room.create(name: "Roomy", open: true)
 Room.create(name: "Room #111", open: false)
 Room.create(name: "Room #901", open: false)
-Room.create(name: "Room #23582768074693", open: false)
+Room.create(name: "Room #274693", open: false)
 Room.create(name: "Room #3", open: false)
 Room.create(name: "Room #2451", open: false)
 

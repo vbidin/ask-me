@@ -90,14 +90,14 @@ form  {
   }
 
   .panel-body {
-    height: 0.7 * $messages-height;
+    height: 0.77 * $messages-height;
     text-align: left;
     overflow-x: visible;
     overflow-y: auto;
   }
 
   .panel-footer {
-    height: 0.3 * $messages-height;
+    height: 0.23 * $messages-height;
     text-align: center;
   }
 }
