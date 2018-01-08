@@ -29,7 +29,8 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.json { render json: @message.to_s.to_json }
+        ActionCable.server.broadcast 'messages', @message.to_s
+        format.json
       end
     end
   end

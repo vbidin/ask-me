@@ -16,3 +16,4 @@
 //= require bootstrap-sprockets
 //= require bootstrap-table
 //= require_tree .
+//= require_tree ./channels
