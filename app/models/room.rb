@@ -1,6 +1,7 @@
 class Room < ApplicationRecord
   has_many :users, through: :permissions
   has_many :questions, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 

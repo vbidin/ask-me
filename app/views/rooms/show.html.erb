@@ -41,7 +41,16 @@
       <div id="messages-container" class="row">
         <div class="panel panel-default">
           <div class="panel-body">
-            this is where the chat goes
+            <ul id="message-list">
+              <% @messages.each do |m| %>
+                <li><%= m.to_s %>  </li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="panel-footer">
+            <div id="message-form">
+              <%= render 'messages/form' %>
+            </div>
           </div>
         </div>
       </div>

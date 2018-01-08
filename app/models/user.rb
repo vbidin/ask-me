@@ -6,17 +6,14 @@ class User < ApplicationRecord
          :validatable, :confirmable, :lockable,
          :authentication_keys => [:login]
 
-  validates :username,
-  :presence => true,
-  :uniqueness => {
-    :case_sensitive => false
-  }
+  validates :username, presence: true, :uniqueness => { :case_sensitive => false }
 
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
 
   has_many :rooms, through: :permissions
   has_many :questions
   has_many :given_answers
+  has_many :messages, dependent: :destroy
   
   def login=(login)
     @login = login

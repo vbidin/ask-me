@@ -14,8 +14,9 @@ class RoomsController < ApplicationController
   def show
     @role = get_role @room
     raise "Room is closed" if @room.closed && @role.name != "Admin"
-
+    
     @questions = Question.where(room: @room)
+    @messages = Message.where(room: @room).order('created_on ASC')
   end
 
   # GET /rooms/new

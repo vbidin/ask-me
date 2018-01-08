@@ -14,3 +14,11 @@ function loadQuestion(id) {
       $('#question-answers').html("answers go here")
   })
 }
+
+function postMessage(user_id, room_id) {
+  var text = $('#message-box').val()
+  $.post("/messages.json", { message: { user_id: user_id, room_id: room_id, text: text } })
+    .done(function(message) {
+      $('#message-list').append("<li>" + message + "</li>")
+    })
+}

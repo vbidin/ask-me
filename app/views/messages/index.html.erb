@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div id="heading" class="col-xs-4">
+      <h3><b>Messages</b></h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <hr>
+  </div>
+
+  <div class="row">
+    <table>
+      <tbody>
+        <% @messages.each do |m| %>
+          <tr>
+            <td><%= m.to_s %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

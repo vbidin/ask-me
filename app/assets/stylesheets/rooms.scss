@@ -3,7 +3,7 @@
 $full-height: 100 - (2 * $padding) - $info;
 $full-width: $content-width;
 
-$height-factor: 3/4;
+$height-factor: 2/3;
 
 $title-height: 7.5vh;
 $questions-height: $full-height - $title-height;
@@ -12,6 +12,24 @@ $messages-height: $questions-height - $answers-height;
 
 #heading {
   vertical-align: middle;
+  margin-top: -14px;
+  display: inline-block;
+}
+
+#room-form {
+  .btn {
+    width: 100%;
+  }
+}
+
+#message-form {
+  .form-control {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
 }
 
 form  { 
@@ -66,13 +84,20 @@ form  {
 
 #messages-container {
   height: $messages-height;
-  text-align: center;
   
   .panel {
     width: 100%;
   }
 
   .panel-body {
-    height: $messages-height;
+    height: 0.7 * $messages-height;
+    text-align: left;
+    overflow-x: visible;
+    overflow-y: auto;
+  }
+
+  .panel-footer {
+    height: 0.3 * $messages-height;
+    text-align: center;
   }
 }

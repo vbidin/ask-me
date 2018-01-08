@@ -121,3 +121,7 @@ Answer.create(question: q3, data: "a\nAnswer 1")
 Answer.create(question: q3, data: "b\nAnswer 2")
 Answer.create(question: q3, data: "c\nAnswer 3")
 Answer.create(question: q3, data: "d\nAnswer 4")
+
+# add sample messages
+Message.create(user: vedran, room: test_room, text: "zdravo", created_on: Time.now)
+Message.create(user: ivan, room: test_room, text: "serbus", created_on: Time.now + 1)
