@@ -10,7 +10,9 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.json
   def show
-    render json: @question.to_json(:include => :type)
+    @type = Type.where(id: @question.type_id).first
+    @answers = Answer.where(question_id: @question.id)
+    render :json => { :question => @question, :answers => @answers, :type => @type }
   end
 
   # GET /questions/new

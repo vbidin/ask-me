@@ -2,9 +2,6 @@ class Type < ApplicationRecord
   has_many :questions
 
   class << self
-    def yes_no
-      new(name: "yes/no")
-    end
 
     def choice
       new(name: "choice")

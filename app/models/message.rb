@@ -5,6 +5,6 @@ class Message < ApplicationRecord
   validates :text, presence: true, length: { minimum: 1 }
 
   def to_s
-    return user.to_s + "@" + room.to_s + " - " + text
+    return user.to_s + " - " + text
   end
 end

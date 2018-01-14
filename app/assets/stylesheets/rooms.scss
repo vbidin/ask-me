@@ -1,11 +1,11 @@
 @import "application.scss";
 
-$full-height: 100 - (2 * $padding) - $info;
+$full-height: 57em;
 $full-width: $content-width;
 
 $height-factor: 2/3;
 
-$title-height: 7.5vh;
+$title-height: 4em;
 $questions-height: $full-height - $title-height;
 $answers-height: $height-factor * $questions-height;
 $messages-height: $questions-height - $answers-height;
@@ -78,7 +78,21 @@ form  {
   }
 
   .panel-body {
-    height: 0.86 * $answers-height;
+    height: 0.76 * $answers-height;
+  }
+
+  .panel-footer {
+    height: 0.10 * $answers-height;
+
+    .btn-submit {
+      width: 20%;
+      float: left;
+    }
+
+    .btn-view {
+      width: 20%;
+      float: right;
+    }
   }
 }
 

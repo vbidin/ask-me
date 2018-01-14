@@ -16,11 +16,9 @@ mod.save!
 guest.save!
 
 # add question types
-yes_no = Type.yes_no
 text_choice = Type.choice
 text_multiple_choice = Type.multiple_choice
 
-yes_no.save!
 text_choice.save!
 text_multiple_choice.save!
 
@@ -89,15 +87,15 @@ q1 = Question.create(
   locked: false
 )
 
-Answer.create(question: q1, data: "a\nAnswer 1")
-Answer.create(question: q1, data: "b\nAnswer 2")
-Answer.create(question: q1, data: "c\nAnswer 3")
-Answer.create(question: q1, data: "d\nAnswer 4")
+Answer.create(question: q1, data: "Answer 1")
+Answer.create(question: q1, data: "Answer 2")
+Answer.create(question: q1, data: "Answer 3")
+Answer.create(question: q1, data: "Answer 4")
 
 q2 = Question.create(
   user: ivan, 
   room: test_room, 
-  type: Type.yes_no,
+  type: Type.choice,
   title: "Question #2", 
   text: "This is a sample YES/NO question.",
   visible: true,
@@ -117,10 +115,10 @@ q3 = Question.create(
   locked: false
 )
 
-Answer.create(question: q3, data: "a\nAnswer 1")
-Answer.create(question: q3, data: "b\nAnswer 2")
-Answer.create(question: q3, data: "c\nAnswer 3")
-Answer.create(question: q3, data: "d\nAnswer 4")
+Answer.create(question: q3, data: "Answer 1")
+Answer.create(question: q3, data: "Answer 2")
+Answer.create(question: q3, data: "Answer 3")
+Answer.create(question: q3, data: "Answer 4")
 
 # add sample messages
 Message.create(user: vedran, room: test_room, text: "zdravo", created_on: Time.now)
