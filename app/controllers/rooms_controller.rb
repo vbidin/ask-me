@@ -17,6 +17,7 @@ class RoomsController < ApplicationController
     
     @questions = Question.where(room: @room)
     @messages = Message.where(room: @room).order('created_on ASC')
+    @user = current_user
   end
 
   # GET /rooms/new

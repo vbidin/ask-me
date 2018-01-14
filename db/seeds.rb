@@ -80,45 +80,45 @@ Room.create(name: "Room #2451", open: false)
 q1 = Question.create(
   user: pero, 
   room: test_room, 
-  type: Type.choice, 
+  type: text_choice, 
   title: "Question #1", 
   text: "This is a sample choice question.",
   visible: true,
   locked: false
 )
 
-Answer.create(question: q1, data: "Answer 1")
-Answer.create(question: q1, data: "Answer 2")
-Answer.create(question: q1, data: "Answer 3")
-Answer.create(question: q1, data: "Answer 4")
+Answer.create(question: q1, data: "Answer 1", correct: false)
+Answer.create(question: q1, data: "Answer 2", correct: false)
+Answer.create(question: q1, data: "Answer 3", correct: false)
+Answer.create(question: q1, data: "Answer 4", correct: true)
 
 q2 = Question.create(
   user: ivan, 
   room: test_room, 
-  type: Type.choice,
+  type: text_choice,
   title: "Question #2", 
   text: "This is a sample YES/NO question.",
   visible: true,
   locked: false
 )
 
-Answer.create(question: q2, data: "Yes")
-Answer.create(question: q2, data: "No")
+Answer.create(question: q2, data: "Yes", correct: true)
+Answer.create(question: q2, data: "No", correct: false)
 
 q3 = Question.create(
   user: vedran, 
   room: test_room, 
-  type: Type.multiple_choice,
+  type: text_multiple_choice,
   title: "Question #3", 
   text: "This is a sample multiple choice question.",
   visible: true,
   locked: false
 )
 
-Answer.create(question: q3, data: "Answer 1")
-Answer.create(question: q3, data: "Answer 2")
-Answer.create(question: q3, data: "Answer 3")
-Answer.create(question: q3, data: "Answer 4")
+Answer.create(question: q3, data: "Answer 1", correct: false)
+Answer.create(question: q3, data: "Answer 2", correct: true)
+Answer.create(question: q3, data: "Answer 3", correct: false)
+Answer.create(question: q3, data: "Answer 4", correct: false)
 
 # add sample messages
 Message.create(user: vedran, room: test_room, text: "zdravo", created_on: Time.now)

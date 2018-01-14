@@ -1,5 +1,5 @@
 <div class="container">
-  <div id="title" room=<%= @room.id %> class="row">
+  <div id="room-title" room=<%= @room.id %> user=<%= @user.id %> class="row">
     <div class="panel panel-default">
       <div class="panel-body">
           <h3><b><%= @room.name %></b></h3>
@@ -14,7 +14,7 @@
            <h4><b>Questions</b></h4>
         </div>
         <div class="panel-footer">
-          <button type="button" class="btn btn-success">Create</button>
+          <button onclick="loadQuestionForm()" type="button" class="btn btn-success">Create</button>
         </div>
         <div id="question-list" class="list-group">
           <% @questions.each do |q| %>
@@ -32,7 +32,6 @@
           </div>
           <div class="panel-body">
             <p id="question-text"></p>
-            <hr>
             <div id="question-answers"></div>
           </div>
           <div id="question-footer" class="panel-footer"></div>

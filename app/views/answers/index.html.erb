@@ -16,6 +16,7 @@
       <tr>
         <td><%= answer.question %></td>
         <td><%= answer.data %></td>
+        <td><%= answer.correct %></td>
         <td><%= link_to 'Show', answer %></td>
         <td><%= link_to 'Edit', edit_answer_path(answer) %></td>
         <td><%= link_to 'Destroy', answer, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -37,7 +37,7 @@ form  {
   width: 100%;
 }
 
-#title {
+#room-title {
   min-height: $title-height;
   text-align: center;
 
@@ -69,30 +69,32 @@ form  {
   height: $answers-height;
   text-align: center;
 
+  .btn-submit {
+    width: 20%;
+    float: left;
+  }
+
+  .btn-view {
+    width: 20%;
+    float: right;
+  }
+
   .panel {
     width: 100%;
   }
 
   .panel-heading {
-    height: 0.10 * $answers-height;
+    height: 0.12 * $answers-height;
   }
 
   .panel-body {
-    height: 0.76 * $answers-height;
+    height: 0.74 * $answers-height;
+    overflow-x: visible;
+    overflow-y: auto;
   }
 
   .panel-footer {
     height: 0.10 * $answers-height;
-
-    .btn-submit {
-      width: 20%;
-      float: left;
-    }
-
-    .btn-view {
-      width: 20%;
-      float: right;
-    }
   }
 }
 
