@@ -12,7 +12,30 @@ class QuestionsController < ApplicationController
   def show
     @type = Type.where(id: @question.type_id).first
     @answers = Answer.where(question_id: @question.id)
-    render :json => { :question => @question, :answers => @answers, :type => @type }
+
+    # check if user already answered the question
+    answered = false
+    for a in @answers
+      given_answer = GivenAnswer.where(user_id: current_user.id, answer_id: a.id)
+      if (given_answer.exists?)
+        answered = true
+        break
+      end
+    end
+
+    # if true load the given answers
+    given_answers = []
+    if (answered)
+      for a in @answers
+        given_answers.append(GivenAnswer.where(user_id: current_user.id, answer_id: a.id).first)
+      end
+    end
+
+    render :json => { :question => @question, 
+                      :answers => @answers, 
+                      :type => @type, 
+                      :answered => answered,
+                      :given_answers => given_answers }
   end
 
   # GET /questions/new

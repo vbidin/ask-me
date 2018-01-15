@@ -12,6 +12,8 @@ function loadQuestion(id) {
       let question = data.question
       let type = data.type
       let answers = data.answers
+      let answered = data.answered
+      let given_answers = data.given_answers
 
       $('#question-title').html(question.title)
       $('#question-text').html(question.text)
@@ -27,8 +29,18 @@ function loadQuestion(id) {
         throw "unsupported question type: " + type.name
 
       footer = $('#question-footer')
-      footer.append(`<button id="` + question.id + `" type="button" onclick="submitAnswer(` + question.id + `)" class="btn btn-sm btn-primary btn-submit">Submit</button>`)
-      footer.append(`<button id="` + question.id + `" type="button" onclick="viewResults(` + question.id + `)" class="btn btn-sm btn-primary btn-view">View results</button>`)
+      footer.append(`<button id="submit" type="button" onclick="submitAnswer(` + question.id + `)" class="btn btn-sm btn-primary btn-submit">Submit</button>`)
+      footer.append(`<button id="view-results" type="button" onclick="viewResults(` + question.id + `)" class="btn btn-sm btn-primary btn-view">View results</button>`)
+
+      if (answered) {
+        loadGivenAnswers(given_answers)
+        $("input[type=checkbox], input[type=radio]").prop("disabled", true)
+      }
+
+      if (answered || question.locked)
+        $('#submit').prop("disabled", true)
+      else
+        $('#view-results').prop("disabled", true)
   })
 }
 
@@ -42,6 +54,27 @@ function loadChoiceAnswers(answers) {
         <label><input value="` + answer.id + `" type="radio" name="option">` + answer.data + `</label>
       </div>
     `)
+  })
+}
+
+function loadMultipleChoiceAnswers(answers) {
+  let container = $('#question-answers')
+  container.empty();
+
+  answers.forEach(function(answer) {
+    container.append(`
+      <div class="checkbox">
+        <label><input value="` + answer.id + `" type="checkbox">` + answer.data + `</label>
+      </div>`)
+  })
+}
+
+function loadGivenAnswers(given_answers) {
+  given_answers.forEach(function(ga) {
+    if (ga != null) {
+      answer = $('input[value=' + ga.answer_id + ']')
+      answer.prop("checked", true)
+    }
   })
 }
 
@@ -135,14 +168,13 @@ function saveQuestion() {
 
     setTimeout(function() {
       loadQuestion(question.id)
-    }, 1000)
-
-    $('#info').html(`
-      <div class="alert alert-success alert-dismissable">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <p>Successfully created a question.</p>
-      </div>
-    `)
+      $('#info').html(`
+        <div class="alert alert-success alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <p>Successfully created a question.</p>
+        </div>
+      `)
+    }, 300)
     
   }).fail(function(data) {
     $('#info').html(`
@@ -156,20 +188,37 @@ function saveQuestion() {
   })
 }
 
-function loadMultipleChoiceAnswers(answers) {
-  let container = $('#question-answers')
-  container.empty();
-
-  answers.forEach(function(answer) {
-    container.append(`
-      <div class="checkbox">
-        <label><input value="` + answer.id + `" type="checkbox">` + answer.data + `</label>
-      </div>`)
-  })
-}
-
 function submitAnswer(question_id) {
-  alert("submitting answer...")
+  let user_id = $('#room-title').attr('user')
+  let inputs = $('input[type=checkbox], input[type=radio]')
+
+  inputs.each(function() {
+    let answer_id = $(this).val()
+    let isChecked = this.checked
+
+    if (isChecked)
+      $.post("/given_answers.json", { given_answer: { user_id: user_id, answer_id: answer_id } })
+      .fail(function(data) {
+        $('#info').html(`
+          <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          </div>
+        `)
+        data.responseJSON.forEach(function(error) {
+          $('#info > div').append("<p>" + error + "</p")
+        })
+      })
+  })
+
+  setTimeout(function() {
+    $('#info').html(`
+      <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p>Successfully submitted answer.</p>
+      </div>
+    `)
+    loadQuestion(question_id)
+  }, 300)
 }
 
 function viewResults(question_id) {

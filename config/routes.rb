@@ -8,12 +8,12 @@ Rails.application.routes.draw do
   resources :questions
 
   resources :answers
+  resources :given_answers
 
   resources :messages
 
   get 'roles' => 'roles#index'
   get 'types' => 'types#index'
-  
   get 'permissions' => 'permissions#index'
   get 'given_answers' => 'given_answers#index'
 
