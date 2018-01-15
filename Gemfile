@@ -26,6 +26,8 @@ gem 'jquery-rails'
 gem 'devise'
 # use cancancan for authorization
 gem 'cancancan'
+# use chartjs for interactive client-side charta
+gem 'chart-js-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

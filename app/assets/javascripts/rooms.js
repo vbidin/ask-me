@@ -34,6 +34,7 @@ function loadQuestion(id) {
 
       if (answered) {
         loadGivenAnswers(given_answers)
+        markCorrectAnswers(answers)
         $("input[type=checkbox], input[type=radio]").prop("disabled", true)
       }
 
@@ -51,7 +52,7 @@ function loadChoiceAnswers(answers) {
   answers.forEach(function(answer) {
     container.append(`
       <div class="radio">
-        <label><input value="` + answer.id + `" type="radio" name="option">` + answer.data + `</label>
+        <input value="` + answer.id + `" type="radio" name="option"><label>` + answer.data + `</label>
       </div>
     `)
   })
@@ -64,7 +65,7 @@ function loadMultipleChoiceAnswers(answers) {
   answers.forEach(function(answer) {
     container.append(`
       <div class="checkbox">
-        <label><input value="` + answer.id + `" type="checkbox">` + answer.data + `</label>
+        <input value="` + answer.id + `" type="checkbox"><label>` + answer.data + `</label>
       </div>`)
   })
 }
@@ -74,6 +75,15 @@ function loadGivenAnswers(given_answers) {
     if (ga != null) {
       answer = $('input[value=' + ga.answer_id + ']')
       answer.prop("checked", true)
+    }
+  })
+}
+
+function markCorrectAnswers(answers) {
+  answers.forEach(function(answer) {
+    if (answer.correct) {
+      label = $('input[value=' + answer.id + ']').parent().children().eq(1)
+      label.addClass("correct")
     }
   })
 }
@@ -159,6 +169,7 @@ function saveQuestion() {
       let question_id = question.id
       let data = $(this).find('input').val()
       let correct = $(this).find('.checkbox > input').is(":checked")
+      console.log(correct)
       answers.push({ question_id: question_id, data: data, correct: correct })
     })
 
@@ -222,7 +233,19 @@ function submitAnswer(question_id) {
 }
 
 function viewResults(question_id) {
-  alert("viewing results...")
+  let container = $('#question-answers')
+  container.empty()
+  container.append(`<canvas id="chart"></canvas>`)
+  
+  let context = document.getElementById("chart").getContext('2d');
+  $.get("/given_answers/" + question_id)
+    .done(function(chart) {
+      console.log(chart)
+      new Chart(context, chart)
+  });
+
+  $('#view-results').html("View answer")
+  $('#view-results').attr("onclick", "loadQuestion(" + question_id + ")")
 }
 
 function postMessage(user_id, room_id) {

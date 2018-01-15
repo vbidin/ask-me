@@ -15,5 +15,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require bootstrap-table
+//= require Chart.min
 //= require_tree .
 //= require_tree ./channels

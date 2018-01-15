@@ -1,8 +1,28 @@
 class GivenAnswersController < ApplicationController
-  before_action :set_given_answer, only: [:show, :edit, :update, :destroy]
 
   def index
     @given_answers = GivenAnswer.all
+  end
+
+  # GET /given_answers/1
+  # GET /given_answers/1.json
+  def show
+    id = params['id']
+    question = Question.where(id: id).first
+    answers = Answer.where(question_id: id)
+
+    counter = []
+    answers.each { |a| counter.append(GivenAnswer.where(answer_id: a.id).count) }
+
+    data = { 
+      labels: answers.map { |a| a.data },
+      datasets: [{
+        label: 'given answers',
+        data: counter
+      }]
+    }
+
+    render json: { type: "bar", data: data }
   end
 
   # POST /messages

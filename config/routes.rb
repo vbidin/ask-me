@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :questions
 
   resources :answers
+
   resources :given_answers
 
   resources :messages
@@ -15,7 +16,6 @@ Rails.application.routes.draw do
   get 'roles' => 'roles#index'
   get 'types' => 'types#index'
   get 'permissions' => 'permissions#index'
-  get 'given_answers' => 'given_answers#index'
 
   mount ActionCable.server => '/cable'
 end

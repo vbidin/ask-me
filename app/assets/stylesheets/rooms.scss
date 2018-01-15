@@ -69,6 +69,11 @@ form  {
   height: $answers-height;
   text-align: center;
 
+  .correct {
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
   .btn-submit {
     width: 20%;
     float: left;
