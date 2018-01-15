@@ -119,7 +119,3 @@ Answer.create(question: q3, data: "Answer 1", correct: false)
 Answer.create(question: q3, data: "Answer 2", correct: true)
 Answer.create(question: q3, data: "Answer 3", correct: false)
 Answer.create(question: q3, data: "Answer 4", correct: false)
-
-# add sample messages
-Message.create(user: vedran, room: test_room, text: "zdravo", created_on: Time.now)
-Message.create(user: ivan, room: test_room, text: "serbus", created_on: Time.now + 1)

@@ -169,7 +169,6 @@ function saveQuestion() {
       let question_id = question.id
       let data = $(this).find('input').val()
       let correct = $(this).find('.checkbox > input').is(":checked")
-      console.log(correct)
       answers.push({ question_id: question_id, data: data, correct: correct })
     })
 
@@ -235,12 +234,13 @@ function submitAnswer(question_id) {
 function viewResults(question_id) {
   let container = $('#question-answers')
   container.empty()
-  container.append(`<canvas id="chart"></canvas>`)
+
+  let id = "chart-" + question_id
+  container.append(`<canvas id="` + id + `"></canvas>`)
   
-  let context = document.getElementById("chart").getContext('2d');
+  let context = document.getElementById(id).getContext('2d');
   $.get("/given_answers/" + question_id)
     .done(function(chart) {
-      console.log(chart)
       new Chart(context, chart)
   });
 

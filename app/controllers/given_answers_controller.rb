@@ -15,7 +15,7 @@ class GivenAnswersController < ApplicationController
     answers.each { |a| counter.append(GivenAnswer.where(answer_id: a.id).count) }
 
     data = { 
-      labels: answers.map { |a| a.data },
+      labels: answers.map { |a| a.correct ? a.data + " (+)" : a.data },
       datasets: [{
         label: 'given answers',
         data: counter
@@ -29,10 +29,12 @@ class GivenAnswersController < ApplicationController
   # POST /messages.json
   def create
     @given_answer = GivenAnswer.new(given_answer_params)
+    @answer = Answer.where(id: @given_answer.answer_id).first
+    @question = Question.where(id: @answer.question_id).first
     
     respond_to do |format|
       if @given_answer.save
-        # broadcast to all people in the same room
+        ActionCable.server.broadcast 'given_answers', @question
         format.json
       else
 
