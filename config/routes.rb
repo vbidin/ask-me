@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :messages
 
+  resources :users
+
   get 'roles' => 'roles#index'
   get 'types' => 'types#index'
   get 'permissions' => 'permissions#index'

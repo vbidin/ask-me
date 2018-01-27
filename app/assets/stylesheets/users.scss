@@ -1,0 +1,42 @@
+@import "application.scss";
+
+$full-height: 57em;
+$full-width: $content-width;
+$title-height: 4em;
+
+$results-height: ($full-height - $title-height) * 0.8;
+
+#results-container {
+    height: $results-height;
+  
+    .panel {
+      width: 105%;
+      height: $results-height;
+      margin-left: -15px;
+    }
+  
+    .btn {
+      width: 100%;
+    }
+}
+
+#users-container {
+  height: $results-height;
+
+  .panel {
+    width: 105%;
+    height: $results-height;
+    margin-left: -15px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+.btn {
+  color: black;
+  background: white;
+  border: none;
+}
+

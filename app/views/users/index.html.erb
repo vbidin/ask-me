@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+
+    <div id="users-container" class="col-xs-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>
+            <b>Users</b>
+          </h4>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <table id="table" data-toggle="table" data-classes="table table-hover" data-row-style="rowStyle" data-search="true" data-search-time-out="100"
+              data-search-align="center" data-trim-on-search="false" data-pagination="false" data-page-size="15" data-page-list="[]"
+              data-classes="table">
+              <thead>
+                <tr>
+                  <th data-align="center" data-field="button" data-sortable="true">Username</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <% @users.each do |user| %>
+                    <td class="col-md-1">
+                      <button type="button" onclick="viewUserResults(<%= user.id %>)" class="btn">
+                        <%= user.username %>
+                      </button>
+                    </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="results-container" class="col-xs-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>
+            <b>Results</b>
+          </h4>
+        </div>
+        <div class="panel-body">
+          <div id="user-answers">
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</div>

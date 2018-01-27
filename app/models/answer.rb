@@ -4,4 +4,5 @@ class Answer < ApplicationRecord
   def to_s
     return data
   end
+
 end
