@@ -18,9 +18,11 @@ guest.save!
 # add question types
 text_choice = Type.choice
 text_multiple_choice = Type.multiple_choice
+#text_no_choice = Type.no_choice
 
 text_choice.save!
 text_multiple_choice.save!
+#text_no_choice.save!
 
 # add users
 vedran = User.new(

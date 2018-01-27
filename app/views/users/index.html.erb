@@ -22,7 +22,7 @@
                 <tr>
                   <% @users.each do |user| %>
                     <td class="col-md-1">
-                      <button type="button" onclick="viewUserResults(<%= user.id %>)" class="btn">
+                      <button type="button" onclick="viewUserResults(<%= user.id %>)" class="btn btn-primary">
                         <%= user.username %>
                       </button>
                     </td>

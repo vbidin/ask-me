@@ -18,7 +18,15 @@ class GivenAnswersController < ApplicationController
       labels: answers.map { |a| a.correct ? a.data + " (+)" : a.data },
       datasets: [{
         label: 'given answers',
-        data: counter
+        data: counter,
+        backgroundColor: [
+                'rgba(255, 182, 0, 0.30)',
+                'rgba(0, 255, 212, 0.30)',
+                'rgba(255, 182, 0, 0.30)',
+                'rgba(0, 255, 212, 0.30)',
+                'rgba(255, 182, 0, 0.30)',
+                'rgba(0, 255, 212, 0.30)'
+            ]
       }]
     }
 

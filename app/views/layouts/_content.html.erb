@@ -1,4 +1,5 @@
 <content>
+<div class="parent">
   <div class="container">
     <div id="info" class="row">
       <% if notice %>
@@ -16,7 +17,7 @@
       <% end %>
     </div>
   </div>
-
+</div>
   <% if defined? resource %>
     <%= render 'layouts/errors', object: resource %>
   <% end %>

@@ -8,6 +8,7 @@ $results-height: ($full-height - $title-height) * 0.8;
 
 #results-container {
     height: $results-height;
+   
   
     .panel {
       width: 105%;
@@ -32,11 +33,5 @@ $results-height: ($full-height - $title-height) * 0.8;
   .btn {
     width: 100%;
   }
-}
-
-.btn {
-  color: black;
-  background: white;
-  border: none;
 }
 
