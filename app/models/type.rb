@@ -10,6 +10,10 @@ class Type < ApplicationRecord
     def multiple_choice
       new(name: "multiple choice")
     end
+
+    def text
+      new(name: "text")
+    end
   end
 
   def to_s

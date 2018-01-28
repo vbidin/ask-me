@@ -25,7 +25,9 @@ function loadQuestion(id) {
         loadChoiceAnswers(answers)
       else if (type.name == "multiple choice")
         loadMultipleChoiceAnswers(answers)
-      else
+      else if (type.name == "text")
+        loadTextAnswers(answers)
+      else 
         throw "unsupported question type: " + type.name
 
       footer = $('#question-footer')
@@ -34,7 +36,8 @@ function loadQuestion(id) {
 
       if (answered) {
         loadGivenAnswers(given_answers)
-        markCorrectAnswers(answers)
+        if(type.name != "text")
+          markCorrectAnswers(answers)
         $("input[type=checkbox], input[type=radio]").prop("disabled", true)
       }
 
@@ -43,6 +46,20 @@ function loadQuestion(id) {
       else
         $('#view-results').prop("disabled", true)
   })
+}
+
+function loadTextAnswers(){
+  let container = $('#question-answers')
+  container.empty();
+
+  container.append(`
+  <div class="row">
+    <div class="form-group">
+      <textarea rows=1 style="resize: none; width: 90%; display: inline-block" id="text" class="form-control"/>
+    </div>
+  </div>
+  `)
+
 }
 
 function loadChoiceAnswers(answers) {
@@ -93,10 +110,21 @@ function loadQuestionForm() {
   title_container.empty()
   title_container.html(`
     <div class="row">
-      <form class="form-inline">
-        <label for="title">Title:</label>
-        <input id="title" type="text" class="form-control">
-      </form>
+      <div class="col-xs-7">
+        <form class="form-inline">
+          <label for="title">Title:</label>
+          <input id="title" type="text" class="form-control">
+        </form>
+      </div>
+      <div class="col-xs-5">
+        <div class="form-group">
+        <select onchange="changeType()" rows=1 style="resize: none; width: 90%; display: inline-block" class="form-control" id="question-type-id">
+          <option value="1">Choice</option>
+          <option value="2">Multiple Choice</option>
+          <option value="3">Text</option>
+        </select>
+        </div>
+      </div>
     </div>
   `)
 
@@ -114,12 +142,13 @@ function loadQuestionForm() {
   answers_container.empty()
   answers_container.append(`
     <div class="row">
-      <button type="button" onclick="addAnswer()" style="float: center; width: 20%" class="btn btn-sm btn-success"><b>Add</b></button>
-      <button type="button" onclick="removeAnswer()" style="float: center; width: 20%" class="btn btn-sm btn-danger"><b>Remove</b></button>
+      <button type="button" onclick="addAnswer()" style="float: center; width: 20%" class="btn btn-sm btn-success" id="addAnswer"><b>Add</b></button>
+      <button type="button" onclick="removeAnswer()" style="float: center; width: 20%" class="btn btn-sm btn-danger" id="removeAnswer"><b>Remove</b></button>
     </div>
     <hr>
     </div>
-    <div id="answer-list"></div>
+    <div id="answer-list">
+    </div>
   `)
 
   let footer_container = $('#question-footer')
@@ -131,24 +160,76 @@ function loadQuestionForm() {
 
 function addAnswer() {
   let answers = $('#answer-list')
-  answers.append(`
-    <form class="form-inline">
-      <input type="text" class="form-control" style="display: inline-block; width: 50%">
-      <div class="checkbox">
-        <input type="checkbox">
-      </div>
-    </form>
-  `)
+  let type_id_container = document.getElementById("question-type-id");
+  let type_id = type_id_container.options[type_id_container.selectedIndex].value;
+
+  if (type_id == 2){
+    answers.append(`
+      <form class="form-inline">
+        <input type="text" class="form-control" style="display: inline-block; width: 50%">
+        <div class="checkbox">
+          <input type="checkbox">
+        </div>
+      </form>
+    `)}
+  else if(type_id == 1){
+    answers.append(`
+    <div class="row" style="display: inline-block; width: 80%">
+      <input type="text" class="form-control col-xs-9" style="display: inline-block; width: 75%">
+      <div class="radio col-xs-3">
+        <input type="radio" name="tip">
+    </div>
+  `)}
+
+}
+
+function changeType(){
+
+  let type_id_container = document.getElementById("question-type-id");
+  let type_id = type_id_container.options[type_id_container.selectedIndex].value;
+
+  if(type_id == 3){
+    document.getElementById("addAnswer").disabled = true;
+    document.getElementById("removeAnswer").disabled = true;
+  } else if(type_id == 1){
+    let invalid_answers = $('#answer-list form')
+
+    Array.prototype.forEach.call(invalid_answers, ans => {
+      ans.remove()
+    });
+
+    document.getElementById("addAnswer").disabled = false;
+    document.getElementById("removeAnswer").disabled = false;
+  } else {
+    let invalid_answers = $('#answer-list div')
+
+    Array.prototype.forEach.call(invalid_answers, ans => {
+      ans.remove()
+    });
+
+    document.getElementById("addAnswer").disabled = false;
+    document.getElementById("removeAnswer").disabled = false;
+  }
+
 }
 
 function removeAnswer() {
-  $('#answer-list form:last').remove()
+  let type_id_container = document.getElementById("question-type-id");
+  let type_id = type_id_container.options[type_id_container.selectedIndex].value;
+  if(type_id == 2)
+    $('#answer-list form:last').remove()
+  else{
+    $('#answer-list div:last').remove()
+    $('#answer-list div:last').remove()
+  }
 }
 
 function saveQuestion() {
   let user_id = $('#room-title').attr('user')
   let room_id = $('#room-title').attr('room')
-  let type_id = 2
+  let type_id_container = document.getElementById("question-type-id");
+  let type_id = type_id_container.options[type_id_container.selectedIndex].value;
+
   let title = $('#title').val()
   let text = $('#text').val()
   let visible = true
@@ -165,13 +246,23 @@ function saveQuestion() {
     }
   }).done(function(question) {
     let answers = []
-    $('#answer-list > form').each(function() {
-      let question_id = question.id
-      let data = $(this).find('input').val()
-      let correct = $(this).find('.checkbox > input').is(":checked")
-      answers.push({ question_id: question_id, data: data, correct: correct })
-    })
-
+    if(type_id == "2"){
+      $('#answer-list > form').each(function() {
+        let question_id = question.id
+        let data = $(this).find('input').val()
+        let correct = $(this).find('.checkbox > input').is(":checked")
+        answers.push({ question_id: question_id, data: data, correct: correct })
+      })  
+    } else if(type_id == "1"){
+      $('#answer-list > div').each(function() {
+        let question_id = question.id
+        let data = $(this).find('input').val()
+        let correct = $(this).find('.radio > input').is(":checked")
+        answers.push({ question_id: question_id, data: data, correct: correct })
+      }) 
+    } else {
+      //this is a problem!
+    }
     answers.forEach(function(answer) {
       $.post("/answers.json", { answer: answer })
     })
