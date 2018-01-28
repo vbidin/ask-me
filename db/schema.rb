@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 20180114200325) do
     t.index ["question_id"], name: "index_answers_on_question_id"
   end
 
+  create_table "text_answers", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "question_id"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_text_answers_on_user_id"
+    t.index ["question_id"], name: "index_text_answers_on_question_id"
+  end
+
   create_table "given_answers", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "answer_id"

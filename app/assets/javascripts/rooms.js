@@ -8,7 +8,7 @@ function rowStyle(row, index) {
 
 function loadQuestion(id) {
   $.get("/questions/" + id + ".json")
-    .done(function(data) {
+    .done(function (data) {
       let question = data.question
       let type = data.type
       let answers = data.answers
@@ -27,7 +27,7 @@ function loadQuestion(id) {
         loadMultipleChoiceAnswers(answers)
       else if (type.name == "text")
         loadTextAnswers(answers)
-      else 
+      else
         throw "unsupported question type: " + type.name
 
       footer = $('#question-footer')
@@ -36,7 +36,7 @@ function loadQuestion(id) {
 
       if (answered) {
         loadGivenAnswers(given_answers)
-        if(type.name != "text")
+        if (type.name != "text")
           markCorrectAnswers(answers)
         $("input[type=checkbox], input[type=radio]").prop("disabled", true)
       }
@@ -45,17 +45,17 @@ function loadQuestion(id) {
         $('#submit').prop("disabled", true)
       else
         $('#view-results').prop("disabled", true)
-  })
+    })
 }
 
-function loadTextAnswers(){
+function loadTextAnswers() {
   let container = $('#question-answers')
   container.empty();
 
   container.append(`
   <div class="row">
     <div class="form-group">
-      <textarea rows=1 style="resize: none; width: 90%; display: inline-block" id="text" class="form-control"/>
+      <textarea rows=1 style="resize: none; width: 90%; display: inline-block" id="text-question-answer" class="form-control"/>
     </div>
   </div>
   `)
@@ -66,7 +66,7 @@ function loadChoiceAnswers(answers) {
   let container = $('#question-answers')
   container.empty();
 
-  answers.forEach(function(answer) {
+  answers.forEach(function (answer) {
     container.append(`
       <div class="radio">
         <input value="` + answer.id + `" type="radio" name="option"><label>` + answer.data + `</label>
@@ -79,7 +79,7 @@ function loadMultipleChoiceAnswers(answers) {
   let container = $('#question-answers')
   container.empty();
 
-  answers.forEach(function(answer) {
+  answers.forEach(function (answer) {
     container.append(`
       <div class="checkbox">
         <input value="` + answer.id + `" type="checkbox"><label>` + answer.data + `</label>
@@ -88,7 +88,7 @@ function loadMultipleChoiceAnswers(answers) {
 }
 
 function loadGivenAnswers(given_answers) {
-  given_answers.forEach(function(ga) {
+  given_answers.forEach(function (ga) {
     if (ga != null) {
       answer = $('input[value=' + ga.answer_id + ']')
       answer.prop("checked", true)
@@ -97,7 +97,7 @@ function loadGivenAnswers(given_answers) {
 }
 
 function markCorrectAnswers(answers) {
-  answers.forEach(function(answer) {
+  answers.forEach(function (answer) {
     if (answer.correct) {
       label = $('input[value=' + answer.id + ']').parent().children().eq(1)
       label.addClass("correct")
@@ -163,7 +163,7 @@ function addAnswer() {
   let type_id_container = document.getElementById("question-type-id");
   let type_id = type_id_container.options[type_id_container.selectedIndex].value;
 
-  if (type_id == 2){
+  if (type_id == 2) {
     answers.append(`
       <form class="form-inline">
         <input type="text" class="form-control" style="display: inline-block; width: 50%">
@@ -171,27 +171,29 @@ function addAnswer() {
           <input type="checkbox">
         </div>
       </form>
-    `)}
-  else if(type_id == 1){
+    `)
+  }
+  else if (type_id == 1) {
     answers.append(`
     <div class="row" style="display: inline-block; width: 80%">
       <input type="text" class="form-control col-xs-9" style="display: inline-block; width: 75%">
       <div class="radio col-xs-3">
         <input type="radio" name="tip">
     </div>
-  `)}
+  `)
+  }
 
 }
 
-function changeType(){
+function changeType() {
 
   let type_id_container = document.getElementById("question-type-id");
   let type_id = type_id_container.options[type_id_container.selectedIndex].value;
 
-  if(type_id == 3){
+  if (type_id == 3) {
     document.getElementById("addAnswer").disabled = true;
     document.getElementById("removeAnswer").disabled = true;
-  } else if(type_id == 1){
+  } else if (type_id == 1) {
     let invalid_answers = $('#answer-list form')
 
     Array.prototype.forEach.call(invalid_answers, ans => {
@@ -216,9 +218,9 @@ function changeType(){
 function removeAnswer() {
   let type_id_container = document.getElementById("question-type-id");
   let type_id = type_id_container.options[type_id_container.selectedIndex].value;
-  if(type_id == 2)
+  if (type_id == 2)
     $('#answer-list form:last').remove()
-  else{
+  else {
     $('#answer-list div:last').remove()
     $('#answer-list div:last').remove()
   }
@@ -235,7 +237,8 @@ function saveQuestion() {
   let visible = true
   let locked = false
 
-  $.post("/questions.json", { question: {
+  $.post("/questions.json", {
+    question: {
       user_id: user_id,
       room_id: room_id,
       type_id: type_id,
@@ -244,30 +247,28 @@ function saveQuestion() {
       visible: visible,
       locked: locked
     }
-  }).done(function(question) {
+  }).done(function (question) {
     let answers = []
-    if(type_id == "2"){
-      $('#answer-list > form').each(function() {
+    if (type_id == "2") {
+      $('#answer-list > form').each(function () {
         let question_id = question.id
         let data = $(this).find('input').val()
         let correct = $(this).find('.checkbox > input').is(":checked")
         answers.push({ question_id: question_id, data: data, correct: correct })
-      })  
-    } else if(type_id == "1"){
-      $('#answer-list > div').each(function() {
+      })
+    } else if (type_id == "1") {
+      $('#answer-list > div').each(function () {
         let question_id = question.id
         let data = $(this).find('input').val()
         let correct = $(this).find('.radio > input').is(":checked")
         answers.push({ question_id: question_id, data: data, correct: correct })
-      }) 
-    } else {
-      //this is a problem!
+      })
     }
-    answers.forEach(function(answer) {
+    answers.forEach(function (answer) {
       $.post("/answers.json", { answer: answer })
     })
 
-    setTimeout(function() {
+    setTimeout(function () {
       loadQuestion(question.id)
       $('#info').html(`
         <div class="alert alert-success alert-dismissable">
@@ -276,50 +277,81 @@ function saveQuestion() {
         </div>
       `)
     }, 300)
-    
-  }).fail(function(data) {
+
+  }).fail(function (data) {
     $('#info').html(`
       <div class="alert alert-danger alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
       </div>
     `)
-    data.responseJSON.forEach(function(error) {
+    data.responseJSON.forEach(function (error) {
       $('#info > div').append("<p>" + error + "</p")
     })
   })
 }
 
 function submitAnswer(question_id) {
-  let user_id = $('#room-title').attr('user')
-  let inputs = $('input[type=checkbox], input[type=radio]')
+  //check if this is a text answer
+  let text = document.getElementById('text-question-answer');
 
-  inputs.each(function() {
-    let answer_id = $(this).val()
-    let isChecked = this.checked
+  if (text == null) {
+    let user_id = $('#room-title').attr('user')
+    let inputs = $('input[type=checkbox], input[type=radio]')
+    inputs.each(function () {
+      let answer_id = $(this).val()
+      let isChecked = this.checked
 
-    if (isChecked)
-      $.post("/given_answers.json", { given_answer: { user_id: user_id, answer_id: answer_id } })
-      .fail(function(data) {
-        $('#info').html(`
+      if (isChecked)
+        $.post("/given_answers.json", { given_answer: { user_id: user_id, answer_id: answer_id } })
+          .fail(function (data) {
+            $('#info').html(`
           <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           </div>
         `)
-        data.responseJSON.forEach(function(error) {
-          $('#info > div').append("<p>" + error + "</p")
-        })
-      })
-  })
+            data.responseJSON.forEach(function (error) {
+              $('#info > div').append("<p>" + error + "</p")
+            })
+          })
+    })
 
-  setTimeout(function() {
-    $('#info').html(`
+    setTimeout(function () {
+      $('#info').html(`
       <div class="alert alert-success alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         <p>Successfully submitted answer.</p>
       </div>
     `)
-    loadQuestion(question_id)
-  }, 300)
+      loadQuestion(question_id)
+    }, 300)
+
+  } else {
+
+    let user_id = $('#room-title').attr('user')
+
+    $.post("/text_answers.json", { text_answer: { user_id: user_id, question_id: question_id, text: text.value } })
+      .fail(function (data) {
+        $('#info').html(`
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    </div>
+    `)
+        data.responseJSON.forEach(function (error) {
+          $('#info > div').append("<p>" + error + "</p")
+        })
+      })
+
+    setTimeout(function () {
+      $('#info').html(`
+      <div class="alert alert-success alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <p>Successfully submitted answer.</p>
+      </div>
+    `)
+      loadQuestion(question_id)
+    }, 300)
+
+  }
 }
 
 function viewResults(question_id) {
@@ -328,12 +360,12 @@ function viewResults(question_id) {
 
   let id = "chart-" + question_id
   container.append(`<canvas id="` + id + `"></canvas>`)
-  
+
   let context = document.getElementById(id).getContext('2d');
   $.get("/given_answers/" + question_id)
-    .done(function(chart) {
+    .done(function (chart) {
       new Chart(context, chart)
-  });
+    });
 
   $('#view-results').html("View answer")
   $('#view-results').attr("onclick", "loadQuestion(" + question_id + ")")
