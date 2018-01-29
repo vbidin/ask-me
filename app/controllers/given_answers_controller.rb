@@ -30,7 +30,14 @@ class GivenAnswersController < ApplicationController
       }]
     }
 
-    render json: { type: "bar", data: data }
+    render json: { type: "bar", data: data, options: {
+      legend: {
+         display: false
+      },
+      tooltips: {
+         enabled: false
+      }
+ } }
   end
 
   # POST /messages

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   resources :given_answers
 
+  resources :text_answers
+
   resources :messages
 
   resources :users

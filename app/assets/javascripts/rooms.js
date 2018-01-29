@@ -32,7 +32,7 @@ function loadQuestion(id) {
 
       footer = $('#question-footer')
       footer.append(`<button id="submit" type="button" onclick="submitAnswer(` + question.id + `)" class="btn btn-sm btn-primary btn-submit">Submit</button>`)
-      footer.append(`<button id="view-results" type="button" onclick="viewResults(` + question.id + `)" class="btn btn-sm btn-primary btn-view">View results</button>`)
+      footer.append(`<button id="view-results" type="button" onclick="viewResults(` + [question.id, type.id] + `)" class="btn btn-sm btn-primary btn-view">View results</button>`)
 
       if (answered) {
         loadGivenAnswers(given_answers)
@@ -41,10 +41,15 @@ function loadQuestion(id) {
         $("input[type=checkbox], input[type=radio]").prop("disabled", true)
       }
 
-      if (answered || question.locked)
+      if (answered || question.locked) {
         $('#submit').prop("disabled", true)
-      else
+      } else {
         $('#view-results').prop("disabled", true)
+      }
+      if (type.name == "text") {
+        $('#view-results').prop("disabled", false)
+        $('#submit').prop("disabled", false)
+      }
     })
 }
 
@@ -328,8 +333,9 @@ function submitAnswer(question_id) {
   } else {
 
     let user_id = $('#room-title').attr('user')
+    let line = text.value
 
-    $.post("/text_answers.json", { text_answer: { user_id: user_id, question_id: question_id, text: text.value } })
+    $.post("/text_answers.json", { text_answer: { user_id: user_id, question_id: question_id, text: line } })
       .fail(function (data) {
         $('#info').html(`
     <div class="alert alert-danger alert-dismissable">
@@ -354,18 +360,37 @@ function submitAnswer(question_id) {
   }
 }
 
-function viewResults(question_id) {
+function viewResults(question_id, type) {
+
   let container = $('#question-answers')
   container.empty()
 
-  let id = "chart-" + question_id
-  container.append(`<canvas id="` + id + `"></canvas>`)
+  if (type != 3) {
+    let id = "chart-" + question_id
+    container.append(`<canvas id="` + id + `"></canvas>`)
 
-  let context = document.getElementById(id).getContext('2d');
-  $.get("/given_answers/" + question_id)
-    .done(function (chart) {
-      new Chart(context, chart)
-    });
+    let context = document.getElementById(id).getContext('2d');
+    $.get("/given_answers/" + question_id)
+      .done(function (chart) {
+        new Chart(context, chart)
+      });
+
+  } else {
+    $.get("/text_answers/" + question_id)
+      .done(function (data) {
+        let answers = data['answers']
+        let html = ""
+        for (var i in answers) {
+          html = html.concat(`<div class="col-xs-12" style="width:100%" id="ans-`+ answers[i][0] + answers[i][1] +`">
+          <label class="col-xs-6" style="width:30%; float:left">` + answers[i][0] + `:</label>
+          <div class="col-xs-6" style="widht:70%">` + answers[i][1] + `</div>
+          </div>`)
+        }
+        container.append(html)
+      });
+
+    $('#submit').prop("disabled", true)
+  }
 
   $('#view-results').html("View answer")
   $('#view-results').attr("onclick", "loadQuestion(" + question_id + ")")
